@@ -282,8 +282,7 @@ Esto confirma que las diferencias escenario-a-escenario reportadas en este datas
 
 ```
 .
-├── README.md                              # versión inglés
-├── README.es.md                           # este documento
+├── README.md                              # este documento
 ├── ev_model.py                            # modelo energético VE con biblioteca de vehículos
 ├── seccionA_B_C_D_E_v5_2.py               # script de adquisición CARLA con catálogo de 12 escenarios
 ├── grid_runs/
@@ -299,10 +298,7 @@ Esto confirma que las diferencias escenario-a-escenario reportadas en este datas
 │   ├── datos_grid_S10_audi_SOC40_dry24.csv
 │   ├── datos_grid_S11_audi_SOC40_wet10.csv
 │   └── datos_grid_S12_audi_SOC40_snow_neg5.csv
-└── source_geodata/
-    ├── Mapa3.tif                          # DEM de entrada (Copernicus COP30, EPSG:4326)
-    ├── MapaGenerado3.rrhd                 # archivo de escena de RoadRunner
-    └── roads.{shp,dbf,shx,prj,cpg}        # geometría de carreteras OSM (fragmento GU-186)
+└── 
 ```
 
 ---
