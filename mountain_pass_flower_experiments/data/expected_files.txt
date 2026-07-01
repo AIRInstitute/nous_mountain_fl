@@ -1,0 +1,17 @@
+Copia aquí los CSV válidos de entrenamiento/evaluación.
+
+Rutas completas recomendadas:
+
+datos_grid_S01_tesla_SOC90_dry24.csv
+datos_grid_S02_tesla_SOC90_wet10.csv
+datos_grid_S03_tesla_SOC90_snow_neg5.csv
+datos_grid_S04_tesla_SOC40_dry24.csv
+datos_grid_S05_tesla_SOC40_wet10.csv
+datos_grid_S06_tesla_SOC40_snow_neg5.csv
+datos_grid_S07_audi_SOC90_dry24.csv
+datos_grid_S08_audi_SOC90_wet10.csv
+datos_grid_S09_audi_SOC90_snow_neg5.csv
+datos_grid_S10_audi_SOC40_dry24.csv
+datos_grid_S11_audi_SOC40_wet10.csv
+datos_grid_S12_audi_SOC40_snow_neg5.csv
+

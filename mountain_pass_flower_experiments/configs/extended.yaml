@@ -1,0 +1,102 @@
+seed: 42
+segment_m: 100.0
+min_segment_m: 20.0
+expected_speed_kmh: 35.0
+
+# Deja este valor a 0 si ya has borrado el CSV parcial/incompleto.
+# Si quieres blindar la evaluación principal, usa por ejemplo 8000 para excluir rutas < 8 km.
+data_filters:
+  min_route_distance_m: 0
+
+# El target principal es el residual respecto al baseline físico plano de entrada.
+target_column: residual_entry_flat_wh
+base_prediction_column: baseline_entry_flat_wh
+feature_set: entry_topography
+
+training:
+  batch_size: 32
+  centralized_epochs: 200
+  cv_centralized_epochs: 160
+  local_epochs: 5
+  cv_local_epochs: 3
+  learning_curve_local_epochs: 5
+  flower_checkpoint_local_epochs: 3
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  patience: 30
+  cv_patience: 25
+  hidden_layers: [64, 64, 32]
+  dropout: 0.0
+
+flower:
+  rounds: 12
+  fraction_fit: 1.0
+  fraction_evaluate: 1.0
+  min_fit_clients: 2
+  min_evaluate_clients: 1
+  min_available_clients: 2
+  proximal_mu: 0.01
+
+risk:
+  reserve_soc_percent: 5.0
+  soc_grid_percent: [8, 10, 12, 15, 20, 25, 30, 40]
+
+synthetic_clients:
+  enabled: false
+  copies_per_client: 0
+  payload_kg: [0, 150, 300, 500]
+  eta_factor: [0.96, 1.0, 1.04]
+  crr_factor: [0.95, 1.0, 1.10]
+  capacity_factor: [0.90, 1.0, 1.05]
+
+cross_validation:
+  enabled: true
+  val_fraction: 0.15
+  max_folds: null
+
+  # Recomendación: deja Flower desactivado aquí para no lanzar decenas de simulaciones Ray/Flower.
+  # La demostración Flower explícita está en learning_curve.flower_checkpoints.
+  run_centralized: true
+  run_flower: false
+  flower_strategies: [fedavg]
+  flower_rounds: 8
+
+  protocols:
+    leave_one_route: true
+    leave_one_scenario_group: true
+    leave_one_weather: true
+    leave_one_vehicle: true
+    repeated_random:
+      enabled: true
+      n_splits: 30
+      train_fraction: 0.70
+      val_fraction: 0.15
+      test_fraction: 0.15
+
+learning_curve:
+  enabled: true
+  permutations: 50
+  first_permutation_sorted: true
+  batch_sizes: [1, 2, 4]
+  strategies: [fedavg, fedprox]
+  seen_counts: [0, 1, 2, 4, 8, all]
+  include_baselines: true
+  eval_on_remaining: true
+  eval_on_all_seen: true
+  aggregation_alpha: 1.0
+
+  # Checkpoints con Flower real. Son más lentos porque cada checkpoint arranca una simulación Flower.
+  # Sirven para enseñar explícitamente el comportamiento con 2, 4, 8 y todos los coches vistos.
+  flower_checkpoints:
+    enabled: true
+    permutations: 1
+    first_permutation_sorted: true
+    strategies: [fedavg, fedprox]
+    seen_counts: [2, 4, 8, all]
+    rounds: 8
+    include_baselines: true
+    fraction_fit: 1.0
+    fraction_evaluate: 1.0
+    min_fit_clients: 2
+    min_evaluate_clients: 1
+    min_available_clients: 2

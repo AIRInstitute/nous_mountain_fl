@@ -1,0 +1,47 @@
+seed: 42
+segment_m: 100.0
+min_segment_m: 20.0
+expected_speed_kmh: 35.0
+
+# El target principal es el residual respecto al baseline físico plano de entrada.
+target_column: residual_entry_flat_wh
+base_prediction_column: baseline_entry_flat_wh
+
+# Features de entrada de la red neuronal. La lista excluye energía, potencia, tensión y corriente para evitar fuga.
+feature_set: entry_topography
+
+training:
+  batch_size: 32
+  centralized_epochs: 250
+  local_epochs: 5
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  patience: 35
+  hidden_layers: [64, 64, 32]
+  dropout: 0.0
+
+flower:
+  rounds: 20
+  fraction_fit: 1.0
+  fraction_evaluate: 1.0
+  min_fit_clients: 2
+  min_evaluate_clients: 1
+  min_available_clients: 2
+  proximal_mu: 0.01
+
+split:
+  train_fraction: 0.70
+  val_fraction: 0.15
+  test_fraction: 0.15
+
+risk:
+  reserve_soc_percent: 5.0
+  soc_grid_percent: [8, 10, 12, 15, 20, 25, 30, 40]
+
+synthetic_clients:
+  enabled: false
+  copies_per_client: 0
+  payload_kg: [0, 150, 300, 500]
+  eta_factor: [0.96, 1.0, 1.04]
+  crr_factor: [0.95, 1.0, 1.10]
+  capacity_factor: [0.90, 1.0, 1.05]

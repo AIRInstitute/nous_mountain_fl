@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mountain-pass-fl"
+version = "0.2.0"
+description = "Experimentos de aprendizaje federado con Flower para estimación energética en puertos de montaña con vehículos eléctricos"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Mountain Pass FL"}]
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,83 @@
+seed: 42
+segment_m: 100.0
+min_segment_m: 20.0
+expected_speed_kmh: 35.0
+
+data_filters:
+  min_route_distance_m: 0
+
+target_column: residual_entry_flat_wh
+base_prediction_column: baseline_entry_flat_wh
+feature_set: entry_topography
+
+training:
+  batch_size: 32
+  centralized_epochs: 50
+  cv_centralized_epochs: 35
+  local_epochs: 2
+  cv_local_epochs: 1
+  learning_curve_local_epochs: 2
+  flower_checkpoint_local_epochs: 1
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  patience: 8
+  cv_patience: 6
+  hidden_layers: [32, 32]
+  dropout: 0.0
+
+flower:
+  rounds: 3
+  fraction_fit: 1.0
+  fraction_evaluate: 1.0
+  min_fit_clients: 2
+  min_evaluate_clients: 1
+  min_available_clients: 2
+  proximal_mu: 0.01
+
+risk:
+  reserve_soc_percent: 5.0
+  soc_grid_percent: [10, 15, 20, 30]
+
+synthetic_clients:
+  enabled: false
+  copies_per_client: 0
+
+cross_validation:
+  enabled: true
+  val_fraction: 0.15
+  max_folds: 6
+  run_centralized: true
+  run_flower: false
+  flower_strategies: [fedavg]
+  flower_rounds: 3
+  protocols:
+    leave_one_route: true
+    leave_one_scenario_group: false
+    leave_one_weather: false
+    leave_one_vehicle: false
+    repeated_random:
+      enabled: true
+      n_splits: 2
+      train_fraction: 0.70
+      val_fraction: 0.15
+      test_fraction: 0.15
+
+learning_curve:
+  enabled: true
+  permutations: 3
+  first_permutation_sorted: true
+  batch_sizes: [1, 2]
+  strategies: [fedavg]
+  seen_counts: [0, 1, 2, all]
+  include_baselines: true
+  eval_on_remaining: true
+  eval_on_all_seen: true
+  aggregation_alpha: 1.0
+  flower_checkpoints:
+    enabled: false
+    permutations: 1
+    first_permutation_sorted: true
+    strategies: [fedavg]
+    seen_counts: [2, all]
+    rounds: 3
+    include_baselines: true
