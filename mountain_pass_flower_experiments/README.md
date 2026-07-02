@@ -1,55 +1,55 @@
-# Experimentos Flower para balizas de puertos de montaña y autonomía de EV
+# Flower Experiments for Mountain-Pass Beacons and EV Autonomy
 
-Este repositorio implementa una prueba de concepto para la idea de **balizas V2I en puertos de montaña sin conectividad externa**. La baliza actúa como servidor federado local; cada coche que cruza el puerto actúa como cliente FL. El objetivo no es predecir punto a punto, sino estimar **al entrar** la energía necesaria para cruzar el tramo y compararla **al salir** con la energía real consumida.
+This repository implements a proof of concept for the idea of **V2I beacons at mountain passes without external connectivity**. The beacon acts as a local federated server; each car that crosses the pass acts as an FL client. The goal is not to predict point by point, but to estimate **on entry** the energy required to cross the segment and compare it **on exit** with the actual energy consumed.
 
-La comparación central es:
-
-```text
-Baseline físico plano sin orografía
-vs
-MLP residual con orografía entrenado centralizado
-vs
-MLP residual con orografía entrenado con Flower/FedAvg
-vs
-MLP residual con orografía entrenado con Flower/FedProx
-```
-
-El baseline principal es `B1_flat_physics_entry_no_topography`: usa distancia, parámetros físicos nominales, velocidad esperada constante, rodadura, aerodinámica y auxiliares, pero fuerza pendiente cero. Representa el caso “sé cuántos km quedan, pero no conozco la orografía del puerto”.
-
-La red neuronal propuesta no sustituye la física. Aprende un residual:
+The central comparison is:
 
 ```text
-E_pred_segmento = E_fisica_plana_segmento + MLP(features_topograficas, clima, vehículo)
-E_pred_puerto   = suma(E_pred_segmento)
+Flat physical baseline without topography
+vs
+Residual MLP with topography trained centrally
+vs
+Residual MLP with topography trained with Flower/FedAvg
+vs
+Residual MLP with topography trained with Flower/FedProx
 ```
 
-## Estructura
+The main baseline is `B1_flat_physics_entry_no_topography`: it uses distance, nominal physical parameters, constant expected speed, rolling resistance, aerodynamics, and auxiliaries, but forces zero grade. It represents the case "I know how many km remain, but I don't know the pass's topography".
+
+The proposed neural network does not replace the physics. It learns a residual:
+
+```text
+E_pred_segment = E_flat_physics_segment + MLP(topographic_features, weather, vehicle)
+E_pred_pass    = sum(E_pred_segment)
+```
+
+## Structure
 
 ```text
 configs/
-  default.yaml                  # Experimentos base de un split
-  quick.yaml                    # Smoke test rápido de run_all
-  extended.yaml                 # Validación cruzada + curva de aprendizaje de baliza
-  quick_extended.yaml           # Smoke test rápido de run_extended
+  default.yaml                  # Base single-split experiments
+  quick.yaml                    # Fast smoke test of run_all
+  extended.yaml                 # Cross-validation + beacon learning curve
+  quick_extended.yaml           # Fast smoke test of run_extended
 
 data/
-  raw/                          # Copiar aquí todos los CSV válidos
-  expected_files.txt            # Lista orientativa de ficheros esperados
+  raw/                          # Copy all valid CSVs here
+  expected_files.txt            # Indicative list of expected files
 
 src/mountain_pass_fl/
-  data.py                       # Carga, inferencia de metadatos, segmentación
-  baselines.py                  # Modelos físicos básicos y nominales
-  features.py                   # Normalización y one-hot
-  models.py                     # MLP residual
-  train.py                      # Entrenamiento centralizado PyTorch
-  flower_exp.py                 # FedAvg/FedProx con Flower
-  prequential.py                # Evaluación predict-then-update de baliza
-  cross_validation.py           # Validación cruzada por rutas/grupos
-  learning_curve.py             # Curva de aprendizaje progresivo de la baliza
-  risk.py                       # Avisos de riesgo y false-safe rate
-  plotting.py                   # Figuras
-  run_all.py                    # Orquestador base
-  run_extended.py               # Orquestador CV + learning curve
+  data.py                       # Loading, metadata inference, segmentation
+  baselines.py                  # Basic and nominal physical models
+  features.py                   # Normalization and one-hot
+  models.py                     # Residual MLP
+  train.py                      # Centralized PyTorch training
+  flower_exp.py                 # FedAvg/FedProx with Flower
+  prequential.py                # Predict-then-update beacon evaluation
+  cross_validation.py           # Cross-validation by routes/groups
+  learning_curve.py             # Progressive beacon learning curve
+  risk.py                       # Risk warnings and false-safe rate
+  plotting.py                   # Figures
+  run_all.py                    # Base orchestrator
+  run_extended.py               # CV + learning curve orchestrator
 
 scripts/
   setup_windows.ps1/.bat
@@ -59,11 +59,11 @@ scripts/
   run_extended_quick_windows.ps1/.bat
 ```
 
-## Datos esperados
+## Expected data
 
-Los CSV deben estar en `data/raw/`. Para la evaluación principal usa solo las rutas completas.
+The CSVs must be in `data/raw/`. For the main evaluation, use only the complete routes.
 
-Lista orientativa de rutas completas:
+Indicative list of complete routes:
 
 ```text
 datos_grid_S01_tesla_SOC90_dry24.csv
@@ -80,18 +80,18 @@ datos_grid_S11_audi_SOC40_wet10.csv
 datos_grid_S12_audi_SOC40_snow_neg5.csv
 ```
 
-Si quieres protegerte contra rutas parciales, edita `configs/extended.yaml`:
+If you want to guard against partial routes, edit `configs/extended.yaml`:
 
 ```yaml
 data_filters:
   min_route_distance_m: 8000
 ```
 
-Con `0` no aplica filtro.
+With `0`, no filter is applied.
 
-## Instalación en Windows PowerShell
+## Installation on Windows PowerShell
 
-Desde la carpeta raíz del proyecto, donde están `pyproject.toml`, `requirements.txt` y `src/`:
+From the project root folder, where `pyproject.toml`, `requirements.txt`, and `src/` are located:
 
 ```powershell
 python -m venv .venv
@@ -100,71 +100,71 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e .
 ```
 
-También puedes usar:
+You can also use:
 
 ```powershell
 .\scripts\setup_windows.ps1
 ```
 
-Si PowerShell bloquea los `.ps1`, usa los `.bat` equivalentes.
+If PowerShell blocks the `.ps1` files, use the equivalent `.bat` files.
 
-## Ejecución base
+## Base execution
 
-Ejecuta un único split, baselines, centralizado, Flower y prequential:
+Runs a single split, baselines, centralized, Flower, and prequential:
 
 ```powershell
 .\.venv\Scripts\python.exe -m mountain_pass_fl.run_all --data-dir data\raw --out-dir outputs --config configs\default.yaml --rebuild-segments
 ```
 
-Sin Flower:
+Without Flower:
 
 ```powershell
 .\.venv\Scripts\python.exe -m mountain_pass_fl.run_all --data-dir data\raw --out-dir outputs --config configs\default.yaml --rebuild-segments --skip-flower
 ```
 
-## Ejecución extendida: validación cruzada + curva de baliza
+## Extended execution: cross-validation + beacon curve
 
-Este es el comando recomendado para los experimentos finales:
+This is the recommended command for the final experiments:
 
 ```powershell
 .\.venv\Scripts\python.exe -m mountain_pass_fl.run_extended --data-dir data\raw --out-dir outputs_extended --config configs\extended.yaml --rebuild-segments
 ```
 
-O con script:
+Or with a script:
 
 ```powershell
 .\scripts\run_extended_windows.ps1
 ```
 
-Si quieres ejecutar todo excepto Flower, útil para depurar rápido:
+If you want to run everything except Flower, useful for fast debugging:
 
 ```powershell
 .\scripts\run_extended_windows_no_flower.ps1
 ```
 
-Smoke test rápido:
+Fast smoke test:
 
 ```powershell
 .\scripts\run_extended_quick_windows.ps1
 ```
 
-## Qué añade `run_extended.py`
+## What `run_extended.py` adds
 
-### 1. Validación cruzada por rutas/clientes
+### 1. Cross-validation by routes/clients
 
-Nunca divide por filas ni por segmentos aleatorios. Cada fold deja fuera clientes/CSV completos.
+It never splits by rows or by random segments. Each fold leaves out complete clients/CSVs.
 
-Protocolos incluidos:
+Included protocols:
 
 ```text
 leave_one_route_out
-leave_one_scenario_group_out     # vehículo + condición: Tesla_dry, Audi_snow, etc.
+leave_one_scenario_group_out     # vehicle + condition: Tesla_dry, Audi_snow, etc.
 leave_one_weather_out            # dry/wet/snow
 leave_one_vehicle_out            # Tesla/Audi
-repeated_random_client_split     # varios splits train/val/test por cliente
+repeated_random_client_split     # several train/val/test splits per client
 ```
 
-Salidas:
+Outputs:
 
 ```text
 outputs_extended/cv/cv_route_predictions.csv
@@ -174,29 +174,29 @@ outputs_extended/cv/cv_splits.csv
 outputs_extended/cv/risk/risk_summary_grouped.csv
 ```
 
-### 2. Curva de aprendizaje progresivo de la baliza
+### 2. Progressive beacon learning curve
 
-Simula órdenes de llegada de vehículos:
+It simulates vehicle arrival orders:
 
 ```text
-coche entra -> predice con modelo actual
-coche sale -> actualiza la baliza
-siguiente coche entra -> usa modelo mejorado
+car enters -> predicts with current model
+car exits -> updates the beacon
+next car enters -> uses improved model
 ```
 
-Se repite con muchas permutaciones de orden de llegada y con distintos tamaños de lote:
+It is repeated with many arrival-order permutations and with different batch sizes:
 
 ```text
 batch_size = 1, 2, 4
 ```
 
-Así puedes responder:
+This lets you answer:
 
 ```text
-¿Qué ocurre cuando la baliza ha visto 0, 1, 2, 4, 8 o todos los coches?
+What happens when the beacon has seen 0, 1, 2, 4, 8, or all cars?
 ```
 
-Salidas:
+Outputs:
 
 ```text
 outputs_extended/learning_curve/learning_curve_route_predictions.csv
@@ -205,31 +205,31 @@ outputs_extended/learning_curve/learning_curve_summary.csv
 outputs_extended/learning_curve/risk/risk_summary_grouped.csv
 ```
 
-`remaining_unseen` evalúa sobre coches que todavía no han pasado. Es la métrica más honesta.
+`remaining_unseen` evaluates on cars that have not yet passed. It is the most honest metric.
 
-`all_routes_replay` reevalúa todas las rutas con el modelo tras ver k coches. Sirve como diagnóstico, no como generalización pura cuando k > 0.
+`all_routes_replay` re-evaluates all routes with the model after seeing k cars. It serves as a diagnostic, not as pure generalization when k > 0.
 
-### 3. Checkpoints Flower explícitos
+### 3. Explicit Flower checkpoints
 
-`learning_curve.py` incluye una simulación secuencial rápida de FedAvg/FedProx. Además, `run_extended.py` puede lanzar checkpoints con Flower real:
+`learning_curve.py` includes a fast sequential simulation of FedAvg/FedProx. In addition, `run_extended.py` can launch checkpoints with real Flower:
 
 ```text
-primeros 2 coches vistos
-primeros 4 coches vistos
-primeros 8 coches vistos
-todos los coches vistos
+first 2 cars seen
+first 4 cars seen
+first 8 cars seen
+all cars seen
 ```
 
-Salidas:
+Outputs:
 
 ```text
 outputs_extended/learning_curve/flower_checkpoints/flower_checkpoints_route_predictions.csv
 outputs_extended/learning_curve/flower_checkpoints/flower_checkpoints_summary.csv
 ```
 
-Estos checkpoints son más lentos porque cada punto arranca una simulación Flower/Ray. Se pueden desactivar con `--skip-flower`.
+These checkpoints are slower because each point starts a Flower/Ray simulation. They can be disabled with `--skip-flower`.
 
-## Salidas principales
+## Main outputs
 
 ```text
 outputs_extended/segments.csv
@@ -241,7 +241,7 @@ outputs_extended/plots/
 outputs_extended/EXTENDED_REPORT.md
 ```
 
-Figuras relevantes:
+Relevant figures:
 
 ```text
 outputs_extended/plots/cv_mae_boxplot_*.png
@@ -249,31 +249,31 @@ outputs_extended/plots/learning_curve_mae_remaining_unseen.png
 outputs_extended/plots/learning_curve_false_safe_remaining_unseen.png
 ```
 
-## Métricas importantes
+## Key metrics
 
 ```text
-MAE energía total [kWh]
-RMSE energía total [kWh]
+MAE total energy [kWh]
+RMSE total energy [kWh]
 Bias [Wh]
 MAPE [%]
-MAE SOC final [%]
+MAE final SOC [%]
 false-safe rate
 false-warning rate
 risk recall
 ```
 
-La métrica más alineada con la motivación del artículo es:
+The metric most aligned with the paper's motivation is:
 
 ```text
-false-safe rate = el sistema dice “puedes cruzar”, pero realmente termina por debajo de la reserva
+false-safe rate = the system says "you can cross", but the vehicle actually ends up below the reserve
 ```
 
-## Nota metodológica
+## Methodological note
 
-El modelo FL no recibe `power_watts`, `current_a`, `voltage_v`, `energy_used_cum_wh` ni `energy_regen_cum_wh` como entrada. Esas columnas solo se usan para construir la etiqueta real de energía. Así se evita fuga de información.
+The FL model does not receive `power_watts`, `current_a`, `voltage_v`, `energy_used_cum_wh`, or `energy_regen_cum_wh` as input. Those columns are only used to build the actual energy label. This prevents information leakage.
 
-La red neuronal recibe features topográficas y climáticas y aprende el residual respecto al baseline físico plano. Por tanto, el argumento experimental no es “la NN sustituye a la física”, sino:
+The neural network receives topographic and weather features and learns the residual with respect to the flat physical baseline. Therefore, the experimental argument is not "the NN replaces the physics", but rather:
 
 ```text
-la baliza aprende una corrección local y específica del puerto sobre un estimador físico/general.
+the beacon learns a local, pass-specific correction on top of a physical/general estimator.
 ```
