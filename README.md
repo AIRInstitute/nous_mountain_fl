@@ -1,5 +1,8 @@
 # Mountain-Pass EV Energy: Digital-Twin Dataset and Federated Beacon Experiments
 
+[![DOI](https://zenodo.org/badge/1110671604.svg)](https://doi.org/10.5281/zenodo.21159398)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
+
 This repository is the public research artifact accompanying a manuscript in preparation for
 *Open Research Europe (ORE)*. It brings together, in a single place, everything needed to
 reproduce the reported results:
@@ -97,15 +100,19 @@ stack is NumPy, pandas, scikit-learn, PyTorch, Flower, Matplotlib and PyYAML.
 
 ## Citation
 
-If you use this dataset or code, please cite the accompanying manuscript. Machine-readable
-metadata is in [`CITATION.cff`](CITATION.cff). The persistent identifier for this artifact is
-**`[DOI to be assigned]`**.
+If you use this dataset or code, please cite the archived artifact (and, once available, the
+accompanying manuscript). Machine-readable metadata is in [`CITATION.cff`](CITATION.cff).
+
+- **Concept DOI (always resolves to the latest version):** [`10.5281/zenodo.21159398`](https://doi.org/10.5281/zenodo.21159398)
+- **This version (v1.0.0):** [`10.5281/zenodo.21159399`](https://doi.org/10.5281/zenodo.21159399)
+
+Cite the concept DOI unless you need to point to a specific release.
 
 ## License
 
-To be finalized before public release (suggested: a permissive license such as MIT for the
-code and CC-BY-4.0 for the dataset). Please open an issue if you need to reuse the material
-before the license is published.
+This work is released under the **Creative Commons Attribution 4.0 International (CC BY 4.0)**
+license — see [`LICENSE`](LICENSE). You are free to share and adapt the material for any
+purpose, provided you give appropriate credit.
 
 ## Acknowledgments and references
 

@@ -10,6 +10,9 @@ abstract: >-
 type: software
 version: "1.0.0"
 date-released: "2026-07-03"
+license: CC-BY-4.0
+# Concept DOI (all versions) — always resolves to the latest release.
+doi: "10.5281/zenodo.21159398"
 authors:
   - family-names: "Cuevas"
     given-names: "Emmanuel"
@@ -27,8 +30,9 @@ keywords:
   - mountain pass
   - CARLA
   - Flower
-# --- DOI ------------------------------------------------------------------
-# After reserving the DOI on Zenodo, uncomment the line below and paste the
-# CONCEPT DOI (the "all versions" one, which always resolves to the latest
-# release). Keep it as the concept DOI so this file never goes stale.
-# doi: "10.5281/zenodo.XXXXXXXX"
+# Version DOI for this specific release (v1.0.0). The top-level `doi` above is
+# the concept DOI, which always resolves to the latest version.
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21159399"
+    description: "Version DOI for v1.0.0"
