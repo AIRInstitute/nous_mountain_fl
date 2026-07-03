@@ -1,6 +1,6 @@
 # Mountain-Pass EV Energy: Digital-Twin Dataset and Federated Beacon Experiments
 
-[![DOI](https://zenodo.org/badge/1110671604.svg)](https://doi.org/10.5281/zenodo.21159398)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21159398.svg)](https://doi.org/10.5281/zenodo.21159398)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 
 This repository is the public research artifact accompanying a manuscript in preparation for
