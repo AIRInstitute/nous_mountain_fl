@@ -96,7 +96,7 @@ The current implementation is interactive-only. A headless CLI and an end-to-end
 
 If you use this tool in academic work, please cite:
 
-> Vidal Cuevas, J. E., Mezquita Martín, Y., Valdeolmillos, D., & Carrera González, A. (2026). *nous_mountain_preprocess: a MATLAB App Designer tool for DEM-to-RoadRunner HD Map conversion with elevation-aware road geometry* [Software]. GitHub. https://github.com/AIRInstitute/nous_mountain_preprocess
+> Vidal Cuevas, J. E., Mezquita Martín, Y., Valdeolmillos, D., & Carrera González, A. (2026). *nous_mountain_preprocess: a MATLAB App Designer tool for DEM-to-RoadRunner HD Map conversion with elevation-aware road geometry* [Software]. GitHub. [https://github.com/AIRInstitute/nous_mountain_fl/tree/main/preprocess](https://github.com/AIRInstitute/nous_mountain_fl/tree/main/preprocess)
 
 A `CITATION.cff` file is included for GitHub's automatic citation feature.
 
