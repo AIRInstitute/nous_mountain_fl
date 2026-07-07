@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this map in academic work, please cite it as below."
+title: "nous_mountain_fl/carla_mountain: a CARLA 0.9.16 digital twin of the Puerto de la Quesera mountain pass"
+type: software
+authors:
+  - family-names: "Vidal Cuevas"
+    given-names: "Jesús Emmanuel"
+    affiliation: "Universidad Politécnica de Pachuca"
+  - family-names: "Mezquita Martín"
+    given-names: "Yeray"
+    affiliation: "AIR Institute"
+  - family-names: "Valdeolmillos"
+    given-names: "Diego"
+    affiliation: "AIR Institute"
+  - family-names: "Carrera González"
+    given-names: "Albano"
+    affiliation: "AIR Institute"
+repository-code: "https://github.com/AIRInstitute/nous_mountain_fl/tree/main/carla_mountain"
+license: CC-BY-4.0
+version: 1.0.0
+date-released: "2026-06-01"
+abstract: "Located in the carla/ folder of the nous_mountain_fl monorepo (formerly a standalone repository, merged in per project decision). The Mountain_0.9.16.zip import bundle (288 MB) is distributed separately via the Digital-Twin ORE Google Drive folder (https://drive.google.com/drive/folders/1LiuKO9zR1adKe38_wBr-CXa-3FNJfNlo), not tracked in git."
+keywords:
+  - CARLA simulator
+  - digital twin
+  - OpenDRIVE
+  - electric vehicles
+  - mountain pass
+  - Puerto de la Quesera
