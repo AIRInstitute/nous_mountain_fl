@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "nous_mountain_preprocess: a MATLAB App Designer tool for DEM-to-RoadRunner HD Map conversion with elevation-aware road geometry"
+type: software
+authors:
+  - family-names: "Vidal Cuevas"
+    given-names: "Jesús Emmanuel"
+    affiliation: "Universidad Politécnica de Pachuca"
+  - family-names: "Mezquita Martín"
+    given-names: "Yeray"
+    affiliation: "AIR Institute"
+  - family-names: "Valdeolmillos"
+    given-names: "Diego"
+    affiliation: "AIR Institute"
+  - family-names: "Carrera González"
+    given-names: "Albano"
+    affiliation: "AIR Institute"
+repository-code: "https://github.com/AIRInstitute/nous_mountain_preprocess"
+license: MIT
+version: 1.0.0
+date-released: "2026-06-01"
+keywords:
+  - digital elevation model
+  - RoadRunner
+  - HD Map
+  - OpenDRIVE
+  - MATLAB App Designer
+  - digital twin
