@@ -96,6 +96,7 @@ The finished CARLA 0.9.16 digital twin of the Puerto de la Quesera (33 roads, 88
 primitives, 1242–1494 m a.s.l.), packaged as an import bundle for any precompiled CARLA
 installation. Includes the road-grade caveat (read pitch from the vehicle transform, not from
 waypoints) and a diagnostic script that reproduces it.
+
 ---
 
 ## Quick start (federated experiments)
@@ -125,6 +126,7 @@ stack is NumPy, pandas, scikit-learn, PyTorch, Flower, Matplotlib and PyYAML.
 To instead build or modify the digital twin itself, start with
 [`preprocess/README.md`](preprocess/README.md) (MATLAB tool) and
 [`carla_mountain/README.md`](carla_mountain/README.md) (CARLA map).
+
 ---
 
 ## Citation
