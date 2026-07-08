@@ -116,6 +116,8 @@ purpose, provided you give appropriate credit.
 
 ## Acknowledgments and references
 
+This research has been supported by the project “A catalyst for EuropeaN ClOUd Services in the era of data spaces, high-performance and edge computing (NOUS)”, Grant Agreement Number 101135927. Funded by the European Union, views and opinions expressed are, however, those of the authors only and do not necessarily reflect those of the European Union. Neither the European Union nor the granting authority can be held responsible for them.
+
 - **Geospatial data:** Copernicus COP30 DEM (European Space Agency); road geometry from
   OpenStreetMap.
 - **Model-calibration sources:** Liu, K., et al. (2018), *Frontiers of Mechanical Engineering*
