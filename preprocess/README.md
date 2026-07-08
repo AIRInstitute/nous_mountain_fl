@@ -106,7 +106,7 @@ MIT — see [`LICENSE`](LICENSE). A permissive license was chosen because this i
 
 ## 10. Acknowledgements
 
-Developed during a research stay at the **AIR Institute**, Salamanca, Spain, in collaboration with the **Universidad Politécnica de Pachuca / CITNOVA**, Mexico. Built on public data from Copernicus (via OpenTopography) and OpenStreetMap contributors (via BBBike).
+Developed by **AIR Institute**, Salamanca, Spain, in collaboration with the **Universidad Politécnica de Pachuca / CITNOVA**, Mexico. Built on public data from Copernicus (via OpenTopography) and OpenStreetMap contributors (via BBBike).
 
 ---
 
