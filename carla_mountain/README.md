@@ -55,7 +55,7 @@ The map is a digital twin of a winding ~10 km fragment of the **GU-186 road / Pu
    
    This combination — found after iterative testing — is what preserves the elevation profile of every road in the exported `.xodr`.
 3. **UE4 import**, from a source-built CARLA workspace: the `.fbx + .xodr + .json + .fbm` set is dropped into `Unreal/CarlaUE4/Content/Carla/ExportedMaps/` and registered via `make import`.
-4. **Packaging**: `make package ARGS="--packages=Mountain"` produces the deployable `Mountain_0.9.16.zip` bundle, distributed via the [Digital-Twin ORE](https://drive.google.com/drive/folders/1LiuKO9zR1adKe38_wBr-CXa-3FNJfNlo?usp=drive_link) Google Drive folder (see S1 — it's too large to live in the git tree itself).
+4. **Packaging**: `make package ARGS="--packages=Mountain"` produces the deployable `Mountain_0.9.16.zip` bundle, distributed via the [Digital-Twin ORE](https://drive.google.com/drive/folders/1-sQKS117Wj-J6C-D6ptcXz5CtvUCtwj-?usp=sharing) Google Drive folder (see S1 — it's too large to live in the git tree itself).
 
 ## 4. Elevation caveat — read this before you use waypoints
 
@@ -72,7 +72,7 @@ This pitch-based grade signal was validated against literature-based predictions
 ## 5. Quick start
 
 1. Have a precompiled CARLA 0.9.16 installation ready (see [`SETUP.md`](SETUP.md) if you don't).
-2. Download `Mountain_0.9.16.zip` from the [Digital-Twin ORE](https://drive.google.com/drive/folders/1LiuKO9zR1adKe38_wBr-CXa-3FNJfNlo?usp=drive_link) Google Drive folder (it's not stored in the git tree — see S1).
+2. Download `Mountain_0.9.16.zip` from the [Digital-Twin ORE](https://drive.google.com/drive/folders/1-sQKS117Wj-J6C-D6ptcXz5CtvUCtwj-?usp=sharing) Google Drive folder (it's not stored in the git tree — see S1).
 3. Import it with CARLA's own import script:
    ```bash
    ./ImportAssets.sh   # or ImportAssets.bat on Windows
