@@ -32,13 +32,27 @@ nous_mountain_fl/
 │   ├── README.md
 │   ├── ev_model.py            # longitudinal EV energy model + vehicle library
 │   └── carla_acquisition.py   # CARLA acquisition script with the 12-scenario catalog
-└── federated_experiments/     # ── CODE + CONFIGURATION: the experiments ──
+├── federated_experiments/     # ── CODE + CONFIGURATION: the experiments ──
+│   ├── README.md
+│   ├── pyproject.toml  requirements.txt
+│   ├── configs/               # cross-validation and prequential-beacon configurations
+│   ├── scripts/               # POSIX + Windows launchers
+│   └── src/mountain_pass_fl/  # preprocessing, baselines, MLP, Flower FL, prequential eval
+├── preprocess/                 # ── SOFTWARE: DEM-to-RoadRunner HD Map middleware (MIT) ──
+│   ├── README.md
+│   ├── LICENSE                 # MIT — see note under License below
+│   ├── CITATION.cff
+│   ├── mapperV3.mlapp          # MATLAB App Designer source
+│   └── mapperInstaller_web.exe # standalone Windows installer (no MATLAB license required)
+└── carla_mountain/              # ── SOFTWARE + MAP DATA: CARLA 0.9.16 digital twin (mixed license) ──
     ├── README.md
-    ├── pyproject.toml  requirements.txt
-    ├── configs/               # cross-validation and prequential-beacon configurations
-    ├── scripts/               # POSIX + Windows launchers
-    └── src/mountain_pass_fl/  # preprocessing, baselines, MLP, Flower FL, prequential eval
+    ├── SETUP.md
+    ├── CITATION.cff
+    └── examples/                # 01_check_elevation.py
 ```
+> The `Mountain_0.9.16.zip` CARLA import bundle (288 MB) is **not** stored in this repository —
+> it's distributed via the [Digital-Twin ORE Google Drive folder](https://drive.google.com/drive/folders/1LiuKO9zR1adKe38_wBr-CXa-3FNJfNlo?usp=drive_link),
+> linked from [`carla_mountain/README.md`](carla_mountain/README.md).
 
 ### How the layout maps to the paper's *Data and Software Availability*
 
@@ -47,10 +61,11 @@ nous_mountain_fl/
 | **Data** — 12 simulated EV traversal logs | [`data/`](data/) |
 | **Code** — preprocessing, baselines, residual-model training, Flower FL, prequential beacon evaluation | [`digital_twin/`](digital_twin/) and [`federated_experiments/`](federated_experiments/) |
 | **Configuration** — cross-validation and prequential-beacon settings | [`federated_experiments/configs/`](federated_experiments/configs/) |
-
+| **Software** — DEM-to-RoadRunner HD Map middleware | [`preprocess/`](preprocess/) |
+| **Software + map data** — CARLA 0.9.16 digital twin of the pass | [`carla_mountain/`](carla_mountain/) |
 ---
 
-## The three parts
+## The five components
 
 ### 1. Data — [`data/`](data/README.md)
 Twelve CSV logs from a **2 × 2 × 3 factorial design** (Tesla Model 3 RWD / Audi e-tron 55
@@ -70,6 +85,17 @@ physical baseline, and is trained centrally and with Flower (FedAvg / FedProx). 
 "predict-on-entry, update-on-exit" protocol evaluates the beacon as cars arrive. Includes
 route-level cross-validation and a progressive beacon learning curve.
 
+### 4. Geospatial preprocessing — [`preprocess/`](preprocess/README.md)
+The MATLAB App Designer tool (`mapperV3`) that produced the terrain-aware RoadRunner HD Map
+used to build the CARLA map below. Converts a GeoTIFF DEM and an OpenStreetMap road Shapefile
+into a `.rrhd` HD Map with real elevation fused into the road geometry itself — not draped as a
+flat mesh underneath it. Ships with a standalone Windows executable, no MATLAB license needed.
+
+### 5. CARLA map — [`carla_mountain/`](carla_mountain/README.md)
+The finished CARLA 0.9.16 digital twin of the Puerto de la Quesera (33 roads, 884 elevation
+primitives, 1242–1494 m a.s.l.), packaged as an import bundle for any precompiled CARLA
+installation. Includes the road-grade caveat (read pitch from the vehicle transform, not from
+waypoints) and a diagnostic script that reproduces it.
 ---
 
 ## Quick start (federated experiments)
@@ -96,6 +122,9 @@ outputs, and metrics are documented in the
 Federated experiments use `flwr[simulation]` in the 1.x API range (`>=1.8,<2.0`); the core
 stack is NumPy, pandas, scikit-learn, PyTorch, Flower, Matplotlib and PyYAML.
 
+To instead build or modify the digital twin itself, start with
+[`preprocess/README.md`](preprocess/README.md) (MATLAB tool) and
+[`carla_mountain/README.md`](carla_mountain/README.md) (CARLA map).
 ---
 
 ## Citation
@@ -128,6 +157,6 @@ This research has been supported by the project “A catalyst for EuropeaN ClOUd
 
 ## Contact
 
-Developed by Emmanuel Cuevas, Yeray Mezquita Martín, Albano Carrera González, and Diego
+Developed by Jesus Emmanuel Vidal Cuevas, Yeray Mezquita Martín, Albano Carrera González, and Diego
 Valdeolmillos Villaverde. For questions about the data, model assumptions, or experimental
 design, please open an issue.
