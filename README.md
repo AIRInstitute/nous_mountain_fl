@@ -1,7 +1,8 @@
 # Mountain-Pass EV Energy: Digital-Twin Dataset and Federated Beacon Experiments
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21159398.svg)](https://doi.org/10.5281/zenodo.21159398)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License%3A%20code-MIT-blue.svg)](LICENSE)
+[![License: CC0-1.0](https://img.shields.io/badge/License%3A%20data-CC0--1.0-lightgrey.svg)](LICENSE-DATA)
 
 This repository is the public research artifact accompanying a manuscript in preparation for
 *Open Research Europe (ORE)*. It brings together, in a single place, everything needed to
@@ -25,14 +26,16 @@ where a naive highway-consumption estimate can badly overstate the remaining ran
 nous_mountain_fl/
 ├── README.md                  # this overview
 ├── CITATION.cff               # how to cite this artifact
-├── data/                      # ── DATA ──
+├── LICENSE                    # MIT — applies to ALL software in this repository
+├── LICENSE-DATA               # CC0-1.0 — applies to the datasets in data/
+├── data/                      # ── DATA (CC0-1.0) ──
 │   ├── README.md              # full dataset documentation (schema, catalog, results)
 │   └── datos_grid_S01..S12.csv    # 12 EV traversal logs (2 vehicles × 2 SOC × 3 weather)
-├── digital_twin/              # ── CODE: data generation ──
+├── digital_twin/              # ── CODE: data generation (MIT) ──
 │   ├── README.md
 │   ├── ev_model.py            # longitudinal EV energy model + vehicle library
 │   └── carla_acquisition.py   # CARLA acquisition script with the 12-scenario catalog
-├── federated_experiments/     # ── CODE + CONFIGURATION: the experiments ──
+├── federated_experiments/     # ── CODE + CONFIGURATION: the experiments (MIT) ──
 │   ├── README.md
 │   ├── pyproject.toml  requirements.txt
 │   ├── configs/               # cross-validation and prequential-beacon configurations
@@ -40,14 +43,16 @@ nous_mountain_fl/
 │   └── src/mountain_pass_fl/  # preprocessing, baselines, MLP, Flower FL, prequential eval
 ├── preprocess/                 # ── SOFTWARE: DEM-to-RoadRunner HD Map middleware (MIT) ──
 │   ├── README.md
-│   ├── LICENSE                 # MIT — see note under License below
+│   ├── LICENSE                 # MIT
 │   ├── CITATION.cff
 │   ├── mapperV3.mlapp          # MATLAB App Designer source
 │   └── mapperInstaller_web.exe # standalone Windows installer (no MATLAB license required)
-└── carla_mountain/              # ── SOFTWARE + MAP DATA: CARLA 0.9.16 digital twin (mixed license) ──
+└── carla_mountain/              # ── SOFTWARE (MIT) + MAP DATA (CC-BY-4.0) — see License below ──
     ├── README.md
     ├── SETUP.md
     ├── CITATION.cff
+    ├── LICENSE-code             # MIT — example scripts
+    ├── LICENSE-data             # CC-BY-4.0 — map assets (OSM/Copernicus attribution required)
     └── examples/                # 01_check_elevation.py
 ```
 > The `Mountain_0.9.16.zip` CARLA import bundle (288 MB) is **not** stored in this repository —
@@ -140,9 +145,32 @@ Cite the concept DOI unless you need to point to a specific release.
 
 ## License
 
-This work is released under the **Creative Commons Attribution 4.0 International (CC BY 4.0)**
-license — see [`LICENSE`](LICENSE). You are free to share and adapt the material for any
-purpose, provided you give appropriate credit.
+This artifact is **dual-licensed**: all *software* is released under the OSI-approved
+[MIT License](https://opensource.org/license/mit), and all *data* under
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public domain
+dedication). The only exception is the CARLA map package, whose geometry derives from
+OpenStreetMap and Copernicus and therefore carries an upstream attribution requirement.
+
+| Component | Path | License | File |
+|---|---|---|---|
+| Federated-learning experiments, preprocessing, baselines, models | `federated_experiments/` | **MIT** | [`LICENSE`](LICENSE) |
+| EV energy model and CARLA acquisition scripts | `digital_twin/` | **MIT** | [`LICENSE`](LICENSE) |
+| DEM-to-RoadRunner HD Map middleware (`mapperV3`) | `preprocess/` | **MIT** | [`preprocess/LICENSE`](preprocess/LICENSE) |
+| CARLA example scripts | `carla_mountain/examples/` | **MIT** | [`carla_mountain/LICENSE-code`](carla_mountain/LICENSE-code) |
+| 12 simulated EV traversal logs + derived result tables | `data/` | **CC0-1.0** | [`LICENSE-DATA`](LICENSE-DATA) |
+| CARLA map assets (`Mountain.fbx`, `.xodr`, `.json`, import bundle) | `carla_mountain/` | **CC-BY-4.0** | [`carla_mountain/LICENSE-data`](carla_mountain/LICENSE-data) |
+
+The map assets stay under CC-BY-4.0 — not CC0 — because their road network derives from
+**OpenStreetMap** ([ODbL 1.0](https://www.openstreetmap.org/copyright)) and their elevation from
+the **Copernicus GLO-30 DEM**, both of which require attribution downstream. The 12 traversal
+logs, by contrast, are entirely original simulation output and carry no upstream obligation, so
+they are dedicated to the public domain under CC0.
+
+Software availability, in the form requested by *Open Research Europe*:
+
+- **Source code available from:** https://github.com/AIRInstitute/nous_mountain
+- **Archived software available from:** https://doi.org/10.5281/zenodo.21159398
+- **License:** [MIT](https://opensource.org/license/mit)
 
 ## Acknowledgments and references
 

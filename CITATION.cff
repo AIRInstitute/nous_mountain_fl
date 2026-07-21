@@ -8,9 +8,19 @@ abstract: >-
   the pass. Prepared as the research artifact for a manuscript in preparation for
   Open Research Europe (ORE).
 type: software
-version: "1.0.0"
-date-released: "2026-07-03"
-license: CC-BY-4.0
+version: "1.1.0"
+date-released: "2026-07-08"
+repository-code: "https://github.com/AIRInstitute/nous_mountain"
+# Dual-licensed artifact:
+#   MIT      — all software (federated_experiments/, digital_twin/, preprocess/,
+#              carla_mountain/examples/). OSI-approved.
+#   CC0-1.0  — the datasets in data/ (original simulation output).
+# The CARLA map assets in carla_mountain/ are additionally CC-BY-4.0: their geometry
+# derives from OpenStreetMap (ODbL) and Copernicus GLO-30, which require attribution
+# downstream. See README.md for the full per-component table.
+license:
+  - MIT
+  - CC0-1.0
 # Concept DOI (all versions) — always resolves to the latest release.
 doi: "10.5281/zenodo.21159398"
 authors:
@@ -30,9 +40,9 @@ keywords:
   - mountain pass
   - CARLA
   - Flower
-# Version DOI for this specific release (v1.0.0). The top-level `doi` above is
+# Version DOI for this specific release (v1.1.0). The top-level `doi` above is
 # the concept DOI, which always resolves to the latest version.
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.21159399"
-    description: "Version DOI for v1.0.0"
+    value: "10.5281/zenodo.21267619"
+    description: "Version DOI for v1.1.0"
